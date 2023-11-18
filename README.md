@@ -1,2 +1,4 @@
 # CYP06
-Proyecto de peñaloza 
+Proyecto: Qusio decir 
+Grupo: 1108
+Nombre: Humberto Rodriguez
