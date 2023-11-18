@@ -24,33 +24,67 @@
 ******************************************************************************************************************/
 void	Diccionario(char* szNombre, char szPalabras[][TAMTOKEN], int iEstadisticas[], int& iNumElementos)
 {
-		char linea[4000];//captura el archivo
-		iNumElementos = 0;//numero de palabras en el archivo
-		int i; //acumulador
-		FILE* fpDicc;//abrir archivo
+	char inter[200];//intermediario de la linea
+	char linea[4000];//captura el archivo
+	iNumElementos = 0;//numero de palabras en el archivo
+	int i, indi, aux; //acumulador, indice de linea, auxiliar de i
+	FILE* fpDicc;//abrir archivo
+	if (dep == 1)
+		printf("\n%s", szNombre);
+	fopen_s(&fpDicc, szNombre, "r");
+	if (fpDicc != NULL)
+	{
 		if (dep == 1)
-			printf("\n%s", szNombre);
-		fopen_s(&fpDicc, szNombre, "r");
-		if (fpDicc != NULL)
+			printf("\nsi abre\n");
+		while (!feof(fpDicc))
 		{
+			fgets(linea, sizeof(linea), fpDicc);//capturar linea de archivo
 			if (dep == 1)
-				printf("\nsi abre\n");
-			while (!feof(fpDicc))
+				printf("%s\n", linea);
+			_strlwr_s(linea, sizeof(linea));//convertir en minusculas
+			if (dep == 1)
+				printf("%s\n", linea);
+			indi = 0;
+			for (i = 0; i <= strlen(linea); i++)
 			{
-				fgets(linea, sizeof(linea), fpDicc);//capturar linea de archivo
-				if (dep == 1)
-					printf("%s\n", linea);
-				_strlwr_s(linea, sizeof(linea));//convertir en minusculas
-				if (dep == 1)
-					printf("%s\n", linea);
+				aux = i;
+				if (linea[i] != ' ' && linea[i] != ',' && linea[i] != '.' && linea[i] != ';' && linea[i] != ':' && linea[i] != '(' && linea[i] != ')')
+				{
+					inter[indi] = linea[i];
+					indi++;
+				}
+				else
+				{
+					if (linea[i] == ' ')
+					{
+						if (linea[aux + 1] == ' ')
+						{
+							inter[indi] = '\0';
+						}
+						else
+						{
+							inter[indi] = '\0';
+							iNumElementos++;
+							if (dep == 1)
+								printf("%i: %s\n", iNumElementos, inter);
+							indi = 0;
+						}
+					}
+					else
+					{
+						inter[indi] = '\0';
+					}
+				}
 			}
-			fclose(fpDicc);
+			if (dep == 1)
+				printf("%i\n", strlen(linea));
 		}
-		else
-		{ 
-			if(dep==1)
-			printf("\nno abre");
-		}
+		fclose(fpDicc);
+	}
+	else {
+		if (dep == 1)
+			printf("\nno abre\n");
+	}
 	//Sustituya estas lineas por su código
 	iNumElementos = 1;
 	strcpy(szPalabras[0], "AquiVaElDiccionario");
