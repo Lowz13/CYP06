@@ -24,7 +24,33 @@
 ******************************************************************************************************************/
 void	Diccionario(char* szNombre, char szPalabras[][TAMTOKEN], int iEstadisticas[], int& iNumElementos)
 {
-	
+		char linea[4000];//captura el archivo
+		iNumElementos = 0;//numero de palabras en el archivo
+		int i; //acumulador
+		FILE* fpDicc;//abrir archivo
+		if (dep == 1)
+			printf("\n%s", szNombre);
+		fopen_s(&fpDicc, szNombre, "r");
+		if (fpDicc != NULL)
+		{
+			if (dep == 1)
+				printf("\nsi abre\n");
+			while (!feof(fpDicc))
+			{
+				fgets(linea, sizeof(linea), fpDicc);//capturar linea de archivo
+				if (dep == 1)
+					printf("%s\n", linea);
+				_strlwr_s(linea, sizeof(linea));//convertir en minusculas
+				if (dep == 1)
+					printf("%s\n", linea);
+			}
+			fclose(fpDicc);
+		}
+		else
+		{ 
+			if(dep==1)
+			printf("\nno abre");
+		}
 	//Sustituya estas lineas por su código
 	iNumElementos = 1;
 	strcpy(szPalabras[0], "AquiVaElDiccionario");
