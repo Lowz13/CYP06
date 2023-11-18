@@ -27,7 +27,7 @@ void	Diccionario(char* szNombre, char szPalabras[][TAMTOKEN], int iEstadisticas[
 	char inter[200];//intermediario de la linea
 	char linea[4000];//captura el archivo
 	iNumElementos = 0;//numero de palabras en el archivo
-	int i, indi, aux; //acumulador, indice de linea, auxiliar de i
+	int i = 0, indi, aux, j, k; //acumulador, indice de linea, auxiliar de i
 	FILE* fpDicc;//abrir archivo
 	if (dep == 1)
 		printf("\n%s", szNombre);
@@ -45,7 +45,7 @@ void	Diccionario(char* szNombre, char szPalabras[][TAMTOKEN], int iEstadisticas[
 			if (dep == 1)
 				printf("%s\n", linea);
 			indi = 0;
-			for (i = 0; i <= strlen(linea); i++)
+			while (linea[i] != '\0')
 			{
 				aux = i;
 				if (linea[i] != ' ' && linea[i] != ',' && linea[i] != '.' && linea[i] != ';' && linea[i] != ':' && linea[i] != '(' && linea[i] != ')')
@@ -55,6 +55,15 @@ void	Diccionario(char* szNombre, char szPalabras[][TAMTOKEN], int iEstadisticas[
 				}
 				else
 				{
+					if (linea[aux + 1] == '\0')
+					{
+						inter[indi] = '\0';
+						strcpy_s(szPalabras[iNumElementos], TAMTOKEN, inter);
+						iEstadisticas[iNumElementos] = 1;
+						iNumElementos++;
+						if (dep == 1) {}
+						printf("%i: %s\n", iNumElementos, inter);
+					}
 					if (linea[i] == ' ')
 					{
 						if (linea[aux + 1] == ' ')
@@ -64,6 +73,8 @@ void	Diccionario(char* szNombre, char szPalabras[][TAMTOKEN], int iEstadisticas[
 						else
 						{
 							inter[indi] = '\0';
+							strcpy_s(szPalabras[iNumElementos], TAMTOKEN, inter);
+							iEstadisticas[iNumElementos] = 1;
 							iNumElementos++;
 							if (dep == 1)
 								printf("%i: %s\n", iNumElementos, inter);
@@ -75,9 +86,17 @@ void	Diccionario(char* szNombre, char szPalabras[][TAMTOKEN], int iEstadisticas[
 						inter[indi] = '\0';
 					}
 				}
+				i++;
 			}
 			if (dep == 1)
 				printf("%i\n", strlen(linea));
+			for (j = 0; j < 1; j++)
+			{
+				for (k = 0; k < 1; k++)
+				{
+
+				}
+			}
 		}
 		fclose(fpDicc);
 	}
@@ -85,10 +104,6 @@ void	Diccionario(char* szNombre, char szPalabras[][TAMTOKEN], int iEstadisticas[
 		if (dep == 1)
 			printf("\nno abre\n");
 	}
-	//Sustituya estas lineas por su código
-	iNumElementos = 1;
-	strcpy(szPalabras[0], "AquiVaElDiccionario");
-	iEstadisticas[0] = 1;  //la primer palabra aparece solo una vez.
 }
 
 /*****************************************************************************************************************
