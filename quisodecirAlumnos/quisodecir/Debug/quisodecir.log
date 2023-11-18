@@ -1,0 +1,11 @@
+﻿  Corrector.cpp
+C:\Users\lowz\Documents\PROYECT\quisodecirAlumnos\quisodecir\Corrector.cpp(54,2): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  (compilando archivo de origen "/Corrector.cpp")
+  
+C:\Users\lowz\Documents\PROYECT\quisodecirAlumnos\quisodecir\Corrector.cpp(82,2): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  (compilando archivo de origen "/Corrector.cpp")
+  
+C:\Users\lowz\Documents\PROYECT\quisodecirAlumnos\quisodecir\Corrector.cpp(100,2): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  (compilando archivo de origen "/Corrector.cpp")
+  
+  quisodecir.vcxproj -> C:\Users\lowz\Documents\PROYECT\quisodecirAlumnos\Debug\quisodecir.exe
