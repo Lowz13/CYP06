@@ -8,8 +8,6 @@
 	Quiso decir: Programa principal de la aplicacion de la distancia de Levenstein.
 	
 ******************************************************************************************************************/
-
-
 #include "stdafx.h"
 #include <string.h>
 #include "corrector.h"
@@ -24,6 +22,7 @@
 ******************************************************************************************************************/
 void	Diccionario(char* szNombre, char szPalabras[][TAMTOKEN], int iEstadisticas[], int& iNumElementos)
 {
+	char compa[200][TAMTOKEN];
 	char inter[200];//intermediario de la linea
 	char linea[4000];//captura el archivo
 	iNumElementos = 0;//numero de palabras en el archivo
@@ -58,8 +57,8 @@ void	Diccionario(char* szNombre, char szPalabras[][TAMTOKEN], int iEstadisticas[
 					if (linea[aux + 1] == '\0')
 					{
 						inter[indi] = '\0';
+						strcpy_s(compa[iNumElementos], TAMTOKEN, inter);
 						strcpy_s(szPalabras[iNumElementos], TAMTOKEN, inter);
-						iEstadisticas[iNumElementos] = 1;
 						iNumElementos++;
 						if (dep == 1) {}
 						printf("%i: %s\n", iNumElementos, inter);
@@ -73,6 +72,7 @@ void	Diccionario(char* szNombre, char szPalabras[][TAMTOKEN], int iEstadisticas[
 						else
 						{
 							inter[indi] = '\0';
+							strcpy_s(compa[iNumElementos], TAMTOKEN, inter);
 							strcpy_s(szPalabras[iNumElementos], TAMTOKEN, inter);
 							iEstadisticas[iNumElementos] = 1;
 							iNumElementos++;
@@ -88,21 +88,32 @@ void	Diccionario(char* szNombre, char szPalabras[][TAMTOKEN], int iEstadisticas[
 				}
 				i++;
 			}
-			if (dep == 1)
-				printf("%i\n", strlen(linea));
-			for (j = 0; j < 1; j++)
-			{
-				for (k = 0; k < 1; k++)
-				{
 
+			for (j = 0; j < iNumElementos; j++)
+			{
+				for (k = 0; k < iNumElementos; k++)
+				{
+					if (j!=k)
+					{
+						if (strcmp(szPalabras[k], compa[j]) == 0)
+						{
+							printf("\nhay coincidencias\n");
+							szPalabras[j][0]= '\0';
+							iEstadisticas[k]++;
+							iEstadisticas[j] = '\0';
+						}
+					}
 				}
 			}
-		}
-		fclose(fpDicc);
+			
+		}	fclose(fpDicc);
 	}
-	else {
+	else 
+	{
 		if (dep == 1)
+		{
 			printf("\nno abre\n");
+		}
 	}
 }
 
