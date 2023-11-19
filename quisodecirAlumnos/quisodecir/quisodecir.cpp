@@ -43,7 +43,7 @@ int _tmain(int argc, _TCHAR* argv[])
 	for (int j = 0; j < iNumElementos; j++)
 		printf("%-12s %i\n", szPalabras[j], iEstadisticas[j]);
 
-	printf("Numero de elementos en la lista: %i\n", iNumElementos);
+	printf("Numero de elementos en la lista: %i\n", iNumElementos);		
 	strcpy_s(szPalabraLeida, "");
 	while (strcmp(szPalabraLeida, "fin"))
 	{

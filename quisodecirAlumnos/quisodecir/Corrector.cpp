@@ -22,27 +22,19 @@
 ******************************************************************************************************************/
 void	Diccionario(char* szNombre, char szPalabras[][TAMTOKEN], int iEstadisticas[], int& iNumElementos)
 {
-	char compa[200][TAMTOKEN];
+	char auxiliar[60];
 	char inter[200];//intermediario de la linea
 	char linea[4000];//captura el archivo
 	iNumElementos = 0;//numero de palabras en el archivo
-	int i = 0, indi, aux, j, k; //acumulador, indice de linea, auxiliar de i
+	int i = 0, indi, aux, j, k, doom; //acumulador, indice de linea, auxiliar de i
 	FILE* fpDicc;//abrir archivo
-	if (dep == 1)
-		printf("\n%s", szNombre);
 	fopen_s(&fpDicc, szNombre, "r");
 	if (fpDicc != NULL)
 	{
-		if (dep == 1)
-			printf("\nsi abre\n");
 		while (!feof(fpDicc))
 		{
 			fgets(linea, sizeof(linea), fpDicc);//capturar linea de archivo
-			if (dep == 1)
-				printf("%s\n", linea);
 			_strlwr_s(linea, sizeof(linea));//convertir en minusculas
-			if (dep == 1)
-				printf("%s\n", linea);
 			indi = 0;
 			while (linea[i] != '\0')
 			{
@@ -57,11 +49,9 @@ void	Diccionario(char* szNombre, char szPalabras[][TAMTOKEN], int iEstadisticas[
 					if (linea[aux + 1] == '\0')
 					{
 						inter[indi] = '\0';
-						strcpy_s(compa[iNumElementos], TAMTOKEN, inter);
 						strcpy_s(szPalabras[iNumElementos], TAMTOKEN, inter);
+						iEstadisticas[iNumElementos] = 1;
 						iNumElementos++;
-						if (dep == 1) {}
-						printf("%i: %s\n", iNumElementos, inter);
 					}
 					if (linea[i] == ' ')
 					{
@@ -72,12 +62,9 @@ void	Diccionario(char* szNombre, char szPalabras[][TAMTOKEN], int iEstadisticas[
 						else
 						{
 							inter[indi] = '\0';
-							strcpy_s(compa[iNumElementos], TAMTOKEN, inter);
 							strcpy_s(szPalabras[iNumElementos], TAMTOKEN, inter);
 							iEstadisticas[iNumElementos] = 1;
 							iNumElementos++;
-							if (dep == 1)
-								printf("%i: %s\n", iNumElementos, inter);
 							indi = 0;
 						}
 					}
@@ -88,25 +75,57 @@ void	Diccionario(char* szNombre, char szPalabras[][TAMTOKEN], int iEstadisticas[
 				}
 				i++;
 			}
-
+			doom = iNumElementos;
+			if(dep==1)
+			//ordenar
+			for (j = 0; j <= iNumElementos; j++)
+			{
+				for (k = 0; k < iNumElementos; k++)
+				{
+					if (j != k)
+					{
+						if (strcmp(szPalabras[k], szPalabras[k + 1]) == 1)
+						{
+							strcpy_s(auxiliar, TAMTOKEN, szPalabras[k + 1]);
+							strcpy_s(szPalabras[k + 1], TAMTOKEN, szPalabras[k]);
+							strcpy_s(szPalabras[k], TAMTOKEN, auxiliar);
+						}
+					}
+				}
+			} 
+			//estadisticas
+			if(dep==1)
 			for (j = 0; j < iNumElementos; j++)
 			{
 				for (k = 0; k < iNumElementos; k++)
 				{
-					if (j!=k)
+					if (j!=k && iEstadisticas[k] != 0)
 					{
-						if (strcmp(szPalabras[k], compa[j]) == 0)
+						if (strcmp(szPalabras[j], szPalabras[k]) == 0 )
 						{
-							printf("\nhay coincidencias\n");
-							szPalabras[j][0]= '\0';
-							iEstadisticas[k]++;
-							iEstadisticas[j] = '\0';
+  							szPalabras[k][0]= NULL;
+							iEstadisticas[j]++;
+							iEstadisticas[k] = NULL;
+							doom--;
 						}
+					}
+					
+				}
+
+			}
+			if(dep == 0)
+			for (j = 0; j <= iNumElementos; j++)
+			{
+				if (iEstadisticas[j]!=0)
+				{
+					for (k = 0; k < doom; k++)
+					{
+						
 					}
 				}
 			}
-			
-		}	fclose(fpDicc);
+		}	
+		fclose(fpDicc);
 	}
 	else 
 	{
@@ -141,7 +160,7 @@ void	ListaCandidatas		(
 {
 
 	//Sustituya estas lineas por su código
-	strcpy(szListaFinal[0], szPalabrasSugeridas[ 0] ); //la palabra candidata
+	strcpy_s(szListaFinal[0],TAMTOKEN, szPalabrasSugeridas[ 0]); //la palabra candidata
 	iPeso[0] = iEstadisticas[0];			// el peso de la palabra candidata
 	
 	iNumLista = 1;							//Una sola palabra candidata
