@@ -75,67 +75,70 @@ void	Diccionario(char* szNombre, char szPalabras[][TAMTOKEN], int iEstadisticas[
 				}
 				i++;
 			}
-			doom = iNumElementos;
-			if(dep==1)
-			//ordenar
-			for (j = 0; j <= iNumElementos; j++)
-			{
-				for (k = 0; k < iNumElementos; k++)
-				{
-					if (j != k)
-					{
-						if (strcmp(szPalabras[k], szPalabras[k + 1]) == 1)
-						{
-							strcpy_s(auxiliar, TAMTOKEN, szPalabras[k + 1]);
-							strcpy_s(szPalabras[k + 1], TAMTOKEN, szPalabras[k]);
-							strcpy_s(szPalabras[k], TAMTOKEN, auxiliar);
-						}
-					}
-				}
-			} 
-			//estadisticas
-			if(dep==1)
-			for (j = 0; j < iNumElementos; j++)
-			{
-				for (k = 0; k < iNumElementos; k++)
-				{
-					if (j!=k && iEstadisticas[k] != 0)
-					{
-						if (strcmp(szPalabras[j], szPalabras[k]) == 0 )
-						{
-  							szPalabras[k][0]= NULL;
-							iEstadisticas[j]++;
-							iEstadisticas[k] = NULL;
-							doom--;
-						}
-					}
-					
-				}
-
-			}
-			if(dep == 0)
-			for (j = 0; j <= iNumElementos; j++)
-			{
-				if (iEstadisticas[j]!=0)
-				{
-					for (k = 0; k < doom; k++)
-					{
-						
-					}
-				}
-			}
-		}	
+		}
 		fclose(fpDicc);
 	}
-	else 
+	else
 	{
 		if (dep == 1)
-		{
 			printf("\nno abre\n");
-		}
-	}
-}
 
+	}
+	doom = iNumElementos;
+	if (dep == 1)
+		//ordenar
+		for (j = 0; j <= iNumElementos; j++)
+		{
+			for (k = 0; k < iNumElementos; k++)
+			{
+				if (j != k)
+				{
+					if (strcmp(szPalabras[k], szPalabras[k + 1]) == 1)
+					{
+						strcpy_s(auxiliar, TAMTOKEN, szPalabras[k + 1]);
+						strcpy_s(szPalabras[k + 1], TAMTOKEN, szPalabras[k]);
+						strcpy_s(szPalabras[k], TAMTOKEN, auxiliar);
+					}
+				}
+			}
+		}
+	//estadisticas
+	if (dep == 1)
+		for (j = 0; j < iNumElementos; j++)
+		{
+			for (k = 0; k < iNumElementos; k++)
+			{
+				if (j != k && iEstadisticas[k] != 0)
+				{
+					if (strcmp(szPalabras[j], szPalabras[k]) == 0)
+					{
+						szPalabras[k][0] = NULL;
+						iEstadisticas[j]++;
+						iEstadisticas[k] = NULL;
+						doom--;
+					}
+				}
+
+			}
+
+		}
+	if (dep == 1)
+		for (j = 0; j < iNumElementos/2; j++)
+		{
+			for (k = 0; k < iNumElementos; k++)
+			{
+				if (iEstadisticas[k] == 0 && iEstadisticas[k + 1] != 0)
+				{
+					iEstadisticas[k] = iEstadisticas[k + 1];
+					iEstadisticas[k + 1] = 0;
+					strcpy_s(szPalabras[k], TAMTOKEN, szPalabras[k + 1]);
+					szPalabras[k+1][0] = '\0';
+				}
+
+			}
+		}
+	iNumElementos = doom;
+}
 /*****************************************************************************************************************
 	ListaCandidatas: Esta funcion recupera desde el diccionario las palabras validas y su peso
 	Regresa las palabras ordenadas por su peso
@@ -158,7 +161,7 @@ void	ListaCandidatas		(
 	int		iPeso[],							//Peso de las palabras en la lista final
 	int &	iNumLista)							//Numero de elementos en la szListaFinal
 {
-
+	
 	//Sustituya estas lineas por su código
 	strcpy_s(szListaFinal[0],TAMTOKEN, szPalabrasSugeridas[ 0]); //la palabra candidata
 	iPeso[0] = iEstadisticas[0];			// el peso de la palabra candidata
